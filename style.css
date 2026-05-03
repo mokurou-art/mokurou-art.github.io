@@ -277,3 +277,10 @@ footer {
   color: var(--text-muted);
   border-top: 1px solid #1a1a24;
 }
+
+footer .credits {
+  margin-top: 0.8rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: rgba(122, 116, 104, 0.5);
+}
