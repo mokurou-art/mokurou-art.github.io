@@ -1,0 +1,14 @@
+# Windows系
+Thumbs.db
+desktop.ini
+
+# Mac系
+.DS_Store
+
+# エディタ系
+.vscode/
+.idea/
+*.swp
+
+# ローカル専用
+サーバー起動.bat
