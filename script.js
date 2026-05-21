@@ -1,3 +1,49 @@
+// ギャラリー画像の右クリック禁止
+document.addEventListener('contextmenu', function(e) {
+  if (e.target.closest('.img-protect')) {
+    e.preventDefault();
+  }
+});
+
+// ライトボックス
+(function lightbox() {
+  const lb = document.getElementById('lightbox');
+  if (!lb) return;
+  const lbImg = document.getElementById('lightbox-img');
+  const lbCap = document.getElementById('lightbox-caption');
+  const lbClose = document.getElementById('lightbox-close');
+  const backdrop = lb.querySelector('.lightbox-backdrop');
+
+  function open(src, caption) {
+    lbImg.src = src;
+    lbCap.textContent = caption;
+    lb.classList.remove('lightbox-hidden');
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    lb.classList.add('lightbox-hidden');
+    lb.style.display = 'none';
+    lbImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.gallery-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var src = item.getAttribute('data-src');
+      var caption = item.getAttribute('data-caption');
+      if (src) open(src, caption || '');
+    });
+  });
+
+  lbClose.addEventListener('click', close);
+  backdrop.addEventListener('click', close);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') close();
+  });
+})();
+
 const isNight = (() => {
   const h = new Date().getHours();
   return h >= 0 && h < 5;
