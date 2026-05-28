@@ -1,18 +1,191 @@
-// ギャラリー画像の右クリック禁止
+// ===== i18n translations =====
+var i18nEN = {
+  // Opening
+  'opening-copy': 'Still here.<br>Carrying a name no one remembers.',
+  'opening-copy-night': 'The forgotten child smiles again today.<br>Knowing nothing of that winter.',
+  'hidden-msg': 'The forgotten child stays where it\'s bright.<br>Because she doesn\'t remember.',
+
+  // Myth
+  'myth-label': '— Legend —',
+  'myth-heading': 'In the snow, there was a small owl.',
+  'myth-body': 'Wounded, mud-covered, yet still there.<br>A girl took the owl home and tended its wounds.<br>She never asked its name. Never asked why.<br>She simply let it stay.',
+  'myth-muted': '— It was much later that the girl fell in the snow.',
+
+  // Story
+  'story-label': '— Story —',
+  'story-era-ancient': 'Ancient',
+  'story-ancient': 'When spring came and the snow melted, the owl was gone.<br>Since then, a figure walks this land.',
+  'story-era-modern': 'Modern',
+  'story-modern': 'Tending the shrine, still here today.<br>Carrying a name no one knows.',
+  'story-hint': '— The rest awaits here.',
+
+  // Gallery
+  'gallery-label': '— Gallery —',
+  'gallery-cap-1': '...something is there.',
+  'gallery-cap-2': 'A color seen for the first time.',
+  'gallery-cap-3': 'It smelled like yuzu.',
+  'gallery-cap-4': 'The brightest place.',
+  'gallery-cap-5': 'On cold days, just a little closer.',
+  'gallery-cap-6': 'Still halfway.',
+  'gallery-cap-7': 'There is something to carry.',
+  'gallery-cap-8': 'A new morning.',
+
+  // Tale list
+  'tale-label': '— Tales —',
+  'tale-01-title': 'Night of the Messengers',
+  'tale-01-desc': 'Late night, the shrine veranda. The moon was out.',
+
+  // Lore
+  'lore-label': '— World —',
+  'lore-mokurou-name': 'Mokurou',
+  'lore-mokurou-desc': 'Takes the shape of a person, but was once an owl.<br>Wears glasses with no prescription.<br>— Without them, she cannot see the world as humans do.',
+  'lore-shrine-name': 'The Shrine',
+  'lore-shrine-desc': 'Deep in the forest, beside a great tree, stands a small shrine.<br>At its roots, a single piece of amber.<br>Mokurou has always been here, watching over it.',
+  'lore-yukimaru-name': 'Yukimaru',
+  'lore-yukimaru-desc': 'A snowy owl with silver-white plumage. A divine messenger.<br>Sharp when working, just a little soft otherwise.<br>Perches atop Moku\'s head.',
+  'lore-daifuku-name': 'Daifuku',
+  'lore-daifuku-desc': 'A plump, fluffy snowy owl. A divine messenger.<br>Easygoing — even when annoyed, it passes quickly.<br>Firmly believes he is not fat.',
+
+  // Links
+  'links-label': '— Find —',
+
+  // Footer
+  'footer-copy': '© Mokurou — Unbowed by the world, the brush moves on.',
+
+  // Tale page (tale_01)
+  'tale-back': '← Back to tales',
+  'tale-page-label': '— Tales —',
+  'tale-page-title': 'Night of the Messengers',
+  'tale01-p1': 'Late at night, in the shrine’s main hall.',
+  'tale01-p2': 'After Mokurou burrowed into her futon, Yukimaru and Daifuku sat side by side on the veranda. The moon was out.',
+  'tale01-p3': '“Moku worked hard again today,” Yukimaru murmured. A warm night breeze.',
+  'tale01-p4': '“Mm-hm. I kept thinking, is... she... okay? But she made it through to the end~”',
+  'tale01-p5': 'Beyond the veranda, at the roots of the sacred tree, the amber glowed just a little brighter than usual.',
+  'tale01-p6': '“...That amber sometimes glows on days like this,” said Yukimaru.',
+  'tale01-p7': '“Yeah~ I know,” Daifuku nodded. “It’s when Moku-chan’s work reaches a little further.”',
+  'tale01-p8': 'Yukimaru tilted his head. “Further?”',
+  'tale01-p9': '“Umm~ her art crossed the sea. I can feel it~”',
+  'tale01-p10': 'Yukimaru stared at the amber in silence for a while. Indeed, a slightly stronger glow than most nights.',
+  'tale01-p11': '“...I see.”',
+  'tale01-p12': 'A long silence. The wind rustled the sacred tree’s leaves.',
+  'tale01-p13': '“...Daifuku. Have you ever seen the sea?”',
+  'tale01-p14': '“Nope~! Have you, Yukimaru?”',
+  'tale01-p15': '“Me neither.”',
+  'tale01-p16': '“Then let’s ask Moku-chan to take us sometime~ If we just snooze in her bag, she’ll carry us all the way to the sea~”',
+  'tale01-p17': 'Yukimaru let out a soft laugh and turned toward the amber.',
+  'tale01-p18': '“...Not a bad idea.”',
+  'tale01-p19': '“Right~?”',
+  'tale01-p20': '“...But you’re heavy. You’d break the bag.”',
+  'tale01-p21': '“I’m not fat!”',
+  'tale01-p22': '“Try flying yourself once in a while.”',
+  'tale01-p23': '“No way~!”',
+  'tale01-p24': 'Yukimaru was already laughing.',
+  'tale01-p25': 'The sacred tree’s leaves rustled gently, and moonlight slipped softly through the shoji of Mokurou’s bedroom.',
+  'tale01-p26': 'Deep within the shrine, by Mokurou’s pillow, two plump white shapes nestled close, as always.',
+  'tale01-p27': '“Moku, goodnight,” Yukimaru whispered.',
+  'tale01-p28': '“Moku-chan, g’night~” Daifuku whispered.',
+  'tale01-p29': 'Until morning comes, the two will not leave her side.',
+  'tale01-p30': 'At the roots of the sacred tree, the amber continued to glow — quietly, proudly — until dawn.',
+  'tale01-end': 'End',
+  'tale01-footer': '© Mokurou — Unbowed by the world, the brush moves on.',
+
+  // Tale list (tale_02)
+  'tale-02-title': 'Midnight Light',
+  'tale-02-desc': 'Moku wasn\'t in the futon.',
+
+  // Tale page (tale_02)
+  'tale-page-title-02': 'Midnight Light',
+  'tale02-p1': 'Something woke him.',
+  'tale02-p2': 'When Yukimaru opened his eyes, the presence that should have been beside him was gone.',
+  'tale02-p3': 'Moku wasn\'t in the futon.',
+  'tale02-p4': 'Daifuku lay curled in a round ball, breathing softly. No sign of waking.',
+  'tale02-p5': 'Yukimaru slipped through the gap in the shoji without a sound.',
+  'tale02-p6': 'He crossed the veranda and neared the sacred tree — there she was.',
+  'tale02-p7': 'Mokurou sat before the amber.',
+  'tale02-p8': 'Not in seiza. Knees drawn up, leaning slightly forward. She wasn\'t wearing her glasses.',
+  'tale02-p9': 'Her lips were moving. Whispering something to the amber.',
+  'tale02-p10': 'He couldn\'t hear. Whether she was keeping her voice too low, or the wind was stealing it away.',
+  'tale02-p11': 'Yukimaru came no closer.',
+  'tale02-p12': 'He leaned against the trunk of a tree and sat a little ways off.',
+  'tale02-p13': 'There was no moon. A thick-clouded night.',
+  'tale02-p14': 'And yet the amber glowed — faintly, but surely.',
+  'tale02-p15': 'Each time Mokurou spoke, the light seemed to waver.',
+  'tale02-p16': 'As though it were listening.',
+  'tale02-p17': 'How long had it been.',
+  'tale02-p18': 'Mokurou stood. Brushed the dirt from her knees and walked back toward the shrine without looking back.',
+  'tale02-p19': 'Yukimaru returned first. He curled up beside the futon before she arrived.',
+  'tale02-p20': 'The soft slide of the shoji. Bare feet on tatami. The sound of someone burrowing into a futon.',
+  'tale02-p21': '"...Mm," Daifuku murmured in his sleep. "Moku-chan... you\'re cold..."',
+  'tale02-p22': '"...Sorry." A small voice.',
+  'tale02-p23': 'Daifuku wriggled closer to Mokurou. Within moments, his breathing was steady again.',
+  'tale02-p24': 'Yukimaru said nothing.',
+  'tale02-p25': 'He would not ask what she had been saying.',
+  'tale02-p26': 'Only — just before sleep took him, he pressed his forehead gently against Mokurou\'s hair.',
+  'tale02-p27': 'At the roots of the sacred tree, the amber still glowed.',
+  'tale02-p28': 'Even after Mokurou had fallen asleep. For a while longer.',
+  'tale02-p29': 'In a place no one could see, quietly, alone.',
+  'tale02-p30': '— As though answering her.',
+  'tale02-end': 'End',
+  'tale02-footer': '© Mokurou — Unbowed by the world, the brush moves on.'
+};
+
+// ===== Lang switch =====
+(function initLangSwitch() {
+  var sw = document.createElement('div');
+  sw.id = 'lang-switch';
+  sw.innerHTML = '<select id="lang-select"><option value="ja">日本語</option><option value="en">English</option></select>';
+  document.body.appendChild(sw);
+
+  var sel = document.getElementById('lang-select');
+  var saved = localStorage.getItem('mokurou_lang') || 'ja';
+  sel.value = saved;
+
+  sel.addEventListener('change', function() {
+    setLang(sel.value);
+  });
+
+  if (saved === 'en') {
+    setLang('en');
+  }
+})();
+
+function setLang(lang) {
+  var els = document.querySelectorAll('[data-i18n]');
+  els.forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (lang === 'en') {
+      if (!el.getAttribute('data-ja-original')) {
+        el.setAttribute('data-ja-original', el.innerHTML);
+      }
+      if (i18nEN[key]) {
+        el.innerHTML = i18nEN[key];
+      }
+    } else {
+      var orig = el.getAttribute('data-ja-original');
+      if (orig !== null) {
+        el.innerHTML = orig;
+      }
+    }
+  });
+  document.documentElement.lang = lang;
+  localStorage.setItem('mokurou_lang', lang);
+}
+
+// ===== Right-click protection =====
 document.addEventListener('contextmenu', function(e) {
   if (e.target.closest('.img-protect')) {
     e.preventDefault();
   }
 });
 
-// ライトボックス
+// ===== Lightbox =====
 (function lightbox() {
-  const lb = document.getElementById('lightbox');
+  var lb = document.getElementById('lightbox');
   if (!lb) return;
-  const lbImg = document.getElementById('lightbox-img');
-  const lbCap = document.getElementById('lightbox-caption');
-  const lbClose = document.getElementById('lightbox-close');
-  const backdrop = lb.querySelector('.lightbox-backdrop');
+  var lbImg = document.getElementById('lightbox-img');
+  var lbCap = document.getElementById('lightbox-caption');
+  var lbClose = document.getElementById('lightbox-close');
+  var backdrop = lb.querySelector('.lightbox-backdrop');
 
   function open(src, caption) {
     lbImg.src = src;
@@ -32,8 +205,9 @@ document.addEventListener('contextmenu', function(e) {
   document.querySelectorAll('.gallery-item').forEach(function(item) {
     item.addEventListener('click', function() {
       var src = item.getAttribute('data-src');
-      var caption = item.getAttribute('data-caption');
-      if (src) open(src, caption || '');
+      var cap = item.querySelector('figcaption');
+      var caption = cap ? cap.textContent : '';
+      if (src) open(src, caption);
     });
   });
 
@@ -44,30 +218,35 @@ document.addEventListener('contextmenu', function(e) {
   });
 })();
 
-const isNight = (() => {
-  const h = new Date().getHours();
+// ===== Night detection =====
+var isNight = (function() {
+  var h = new Date().getHours();
   return h >= 0 && h < 5;
 })();
 
-// 深夜（0〜5時）キャッチコピーを変える
+// ===== Night variant =====
 (function nightVariant() {
   if (isNight) {
-    const el = document.getElementById('opening-copy');
-    if (el) el.innerHTML = '忘れ子は今日も笑っている。<br>あの冬のことを、知らないまま。';
+    var el = document.getElementById('opening-copy');
+    if (el) {
+      el.innerHTML = '忘れ子は今日も笑っている。<br>あの冬のことを、知らないまま。';
+      el.setAttribute('data-i18n', 'opening-copy-night');
+    }
   }
 })();
 
-// 雪 or 桜のアニメーション
+// ===== Snow / Sakura =====
 function createSnow(sakura) {
-  const container = document.getElementById('snowContainer');
+  var container = document.getElementById('snowContainer');
+  if (!container) return;
   container.innerHTML = '';
-  const chars = sakura ? ['❀', '✿', '·', '✾', '❁'] : ['❄', '❅', '·', '•', '˚'];
-  const color = sakura ? 'rgba(255, 190, 205, 0.75)' : '#ffffff';
-  const anims = ['fall-a', 'fall-b', 'fall-c'];
-  const sizes = [0.18, 0.22, 0.28, 0.38, 0.5, 0.7, 1.0, 1.4];
+  var chars = sakura ? ['❀', '✿', '·', '✾', '❁'] : ['❄', '❅', '·', '•', '˚'];
+  var color = sakura ? 'rgba(255, 190, 205, 0.75)' : '#ffffff';
+  var anims = ['fall-a', 'fall-b', 'fall-c'];
+  var sizes = [0.18, 0.22, 0.28, 0.38, 0.5, 0.7, 1.0, 1.4];
 
-  for (let i = 0; i < 60; i++) {
-    const f = document.createElement('span');
+  for (var i = 0; i < 60; i++) {
+    var f = document.createElement('span');
     f.className = 'snowflake';
     f.textContent = chars[Math.floor(Math.random() * chars.length)];
     f.style.left = Math.random() * 100 + 'vw';
@@ -82,30 +261,32 @@ function createSnow(sakura) {
     if (Math.random() < 0.3) {
       f.style.filter = 'blur(' + (Math.random() * 1.2 + 0.3).toFixed(1) + 'px)';
     }
-    // タッチ/クリックで消える
     f.style.pointerEvents = 'auto';
     f.style.cursor = 'default';
-    f.addEventListener('click', () => {
-      f.style.transition = 'opacity 0.5s ease';
-      f.style.opacity = '0';
-      setTimeout(() => f.remove(), 500);
-    });
+    f.addEventListener('click', (function(flake) {
+      return function() {
+        flake.style.transition = 'opacity 0.5s ease';
+        flake.style.opacity = '0';
+        setTimeout(function() { flake.remove(); }, 500);
+      };
+    })(f));
     container.appendChild(f);
   }
 }
 
 createSnow(isNight);
 
-// 「黙朗」長押しで隠しメッセージ＋桜に変換
+// ===== Hidden message (long press on title) =====
 (function hiddenPress() {
-  const title = document.getElementById('main-title');
-  const msg   = document.getElementById('hidden-msg');
+  var title = document.getElementById('main-title');
+  var msg = document.getElementById('hidden-msg');
   if (!title || !msg) return;
+  msg.setAttribute('data-i18n', 'hidden-msg');
   msg.innerHTML = '忘れ子は、今日も明るい場所にいる。<br>覚えていないから。';
-  let timer = null;
-  let sakuraMode = isNight;
-  const show = () => {
-    timer = setTimeout(() => {
+  var timer = null;
+  var sakuraMode = isNight;
+  var show = function() {
+    timer = setTimeout(function() {
       msg.classList.add('visible');
       if (!sakuraMode) {
         sakuraMode = true;
@@ -113,9 +294,9 @@ createSnow(isNight);
       }
     }, 600);
   };
-  const hide = () => {
+  var hide = function() {
     clearTimeout(timer);
-    setTimeout(() => {
+    setTimeout(function() {
       msg.classList.remove('visible');
       if (sakuraMode && !isNight) {
         sakuraMode = false;
@@ -123,9 +304,9 @@ createSnow(isNight);
       }
     }, 2000);
   };
-  title.addEventListener('mousedown',  show);
+  title.addEventListener('mousedown', show);
   title.addEventListener('touchstart', show, { passive: true });
-  title.addEventListener('mouseup',    hide);
+  title.addEventListener('mouseup', hide);
   title.addEventListener('mouseleave', hide);
-  title.addEventListener('touchend',   hide);
+  title.addEventListener('touchend', hide);
 })();
