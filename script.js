@@ -319,7 +319,39 @@ var i18nEN = {
   'tale06-p32': 'Then I can do it, too. And that\'s all right. Probably.',
   'tale06-p33': 'The lunch break was short. But it was warm.',
   'tale06-end': 'End',
-  'tale06-footer': '© Mokurou — Unbowed by the world, the brush moves on.'
+  'tale06-footer': '© Mokurou — Unbowed by the world, the brush moves on.',
+
+  // tale_07: 白いの、ふたつ
+  'tale-07-title': 'Two White Ones',
+  'tale-07-desc': 'It looks like me.',
+  'tale-page-title-07': 'Two White Ones',
+  'tale07-p1': 'As Daifuku waddled down the shrine\'s veranda, something white flickered through a gap in the garden hedge.',
+  'tale07-p2': 'He stopped.',
+  'tale07-p3': 'Beyond the hedge sat something white and small and round. A kitten. Its eyes were still big, its ears standing straight up. As round as Daifuku. Its white fur was soft and fluffy, glowing faintly where the sunlight passed through it.',
+  'tale07-p4': 'Daifuku held his breath.',
+  'tale07-p5': '"…It looks like me."',
+  'tale07-p6': 'The kitten looked his way. With perfectly round eyes. Daifuku looked back, just as round-eyed.',
+  'tale07-p7': 'For a while, they stayed like that. The wind stirred the hedge, and the shadow of a leaf crossed the kitten\'s back. The kitten didn\'t move. Daifuku didn\'t move either.',
+  'tale07-p8': 'Before long the kitten turned away with a little flounce and began to trot off.',
+  'tale07-p9': '"Ah—wait."',
+  'tale07-p10': 'Daifuku waddles after it. The kitten trots. Daifuku waddles. Neither is fast. Neither one is fast at all. Across the shrine garden, two white rounds drift along at their leisure.',
+  'tale07-p11': 'Yukimaru was watching from the veranda. A teacup in one hand, his brows knit.',
+  'tale07-p12': '"…What is that guy even doing."',
+  'tale07-p13': 'The kitten stopped. Daifuku stopped too.',
+  'tale07-p14': 'It was near the middle of the garden, beside a moss-grown stone lantern. A round pool of sunlight had fallen there, and the ground was tepid and warm.',
+  'tale07-p15': 'The kitten shuffled over close to Daifuku and plopped down. Daifuku plopped down too.',
+  'tale07-p16': 'Two white lumps, side by side. Both round. Both soft. About the only way to tell them apart was that one had ears, and one had a beak.',
+  'tale07-p17': 'In the evening, Mokurou came home.',
+  'tale07-p18': 'Slipping off her sandals and coming around to the garden, she found two soft, squishy things lined up in the sunlight.',
+  'tale07-p19': '"…There are more of them."',
+  'tale07-p20': '"Moku-chan! Look—this one\'s my friend!"',
+  'tale07-p21': 'The kitten mewed. Daifuku went pou. The pitch of their voices was almost exactly the same.',
+  'tale07-p22': 'Mokurou crouched down and gently stroked the kitten\'s head. The kitten narrowed its eyes. "Me too!" Daifuku said, offering up his own head. Mokurou\'s other hand came to rest on Daifuku\'s feathers.',
+  'tale07-p23': 'Yukimaru brought tea from inside. Saying nothing, he sat down beside Mokurou.',
+  'tale07-p24': 'In the garden: two white ones, and Mokurou, and Yukimaru. The shadow of the stone lantern stretched slowly out.',
+  'tale07-p25': 'The kitten, with no sign of going anywhere, let its eyes droop softly shut. And beside it, Daifuku had long since fallen asleep.',
+  'tale07-end': 'End',
+  'tale07-footer': '© Mokurou — Unbowed by the world, the brush moves on.'
 };
 
 // ===== Lang switch =====
