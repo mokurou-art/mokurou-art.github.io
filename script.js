@@ -351,7 +351,32 @@ var i18nEN = {
   'tale07-p24': 'In the garden: two white ones, and Mokurou, and Yukimaru. The shadow of the stone lantern stretched slowly out.',
   'tale07-p25': 'The kitten, with no sign of going anywhere, let its eyes droop softly shut. And beside it, Daifuku had long since fallen asleep.',
   'tale07-end': 'End',
-  'tale07-footer': '© Mokurou — Unbowed by the world, the brush moves on.'
+  'tale07-footer': '© Mokurou — Unbowed by the world, the brush moves on.',
+
+  // tale_08: はじめての、なまえ
+  'tale-08-title': 'The First Name',
+  'tale-08-desc': 'It\'th Thiki.',
+  'tale-page-title-08': 'The First Name',
+  'tale08-p1': 'On the veranda, three white ones sat in a row.',
+  'tale08-p2': 'Yukimaru on Mokurou\'s head. Daifuku on her lap. And one more—a new white one, treading the tatami with slender, timid feet.',
+  'tale08-p3': '"Shiki-nyan!"',
+  'tale08-p4': 'said Daifuku, with a little pou through his nose. As if pleased with the name he\'d given all by himself, he said it again—"Shiki-nyan."',
+  'tale08-p5': '"I haven\'t decided yet."',
+  'tale08-p6': 'So Mokurou said. And yet her fingertip stayed still, tracing the rim of the teacup. Shiki. Laid on the tongue, it made a sound like the first fall of snow.',
+  'tale08-p7': 'The kitten seemed to think it had been called. It turned and looked at Mokurou. In its round eyes, two small lights of the veranda were lit.',
+  'tale08-p8': 'Mokurou had lived too long. For every name she had called, there was a name she could no longer call. Names of flowers, names of birds, names of people. So she always hesitates, a little, before giving a name. Because once it is spoken, that little one is already bound to this world.',
+  'tale08-p9': 'Yukimaru stirred a wing atop her head. Not to hurry her—just, as if to say, why not. On her lap, Daifuku waggled only the very tip of his tail.',
+  'tale08-p10': '"…Shiki."',
+  'tale08-p11': 'She tried calling it.',
+  'tale08-p12': 'The kitten\'s ears pricked straight up. It kicked off the tatami, climbed up onto her lap, and curled into a small round beside Daifuku. And then, from deep in its throat, at last, one word.',
+  'tale08-p13': '"…It\'th Thaki."',
+  'tale08-p14': '"That\'s not it," Mokurou said, laughing in spite of herself.',
+  'tale08-p15': '"It\'s Shiki."',
+  'tale08-p16': '"…It\'th Thiki."',
+  'tale08-p17': 'It still couldn\'t say it right. Even so, the little one laid the just-given name on its tongue once more, as if it were something precious. It\'s decided, then, Mokurou thought. Once you\'ve called it, you can never let go.',
+  'tale08-p18': 'Steam rose slowly. Over the three white ones, the sun of early winter stroked, quietly.',
+  'tale08-end': 'End',
+  'tale08-footer': '© Mokurou — Unbowed by the world, the brush moves on.'
 };
 
 // ===== Lang switch =====
