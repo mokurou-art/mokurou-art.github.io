@@ -45,6 +45,8 @@ var i18nEN = {
   'lore-yukimaru-desc': 'A snowy owl with silver-white plumage. A divine messenger.<br>Sharp when working, just a little soft otherwise.<br>Perches atop Moku\'s head.',
   'lore-daifuku-name': 'Daifuku',
   'lore-daifuku-desc': 'A plump, fluffy snowy owl. A divine messenger.<br>Easygoing — even when annoyed, it passes quickly.<br>Firmly believes he is not fat.',
+  'lore-shiki-name': 'Shiki',
+  'lore-shiki-desc': 'A long-haired cat who came to live at the shrine. Calls herself "watakushi," and carries herself with elegance.<br>Ask her breed and she begins, "A Norwegian Forest…" — and there, always, she falters.<br>— The name Shiki was given by Daifuku.',
 
   // Links
   'links-label': '— Find —',
@@ -508,7 +510,39 @@ var i18nEN = {
   'tale11-p48': 'Mokurou gave it no name.',
   'tale11-p49': 'That even without a name, one may stay here—this Mokurou knows well.',
   'tale11-end': 'End',
-  'tale11-footer': '© Mokurou — Unbowed by the world, the brush moves on.'
+  'tale11-footer': '© Mokurou — Unbowed by the world, the brush moves on.',
+
+  // Tale list (tale_12)
+  'tale-12-title': 'The Scent of Water',
+  'tale-12-desc': 'Perhaps it was good that I forgot.',
+
+  // Tale page (tale_12)
+  'tale-page-title-12': 'The Scent of Water',
+  'tale12-p1': 'In the morning, Mokurou stopped her hand halfway as it reached for the kettle.',
+  'tale12-p2': 'Last night, she was to have set the cold-brew tea to steep. Her back ached, so she lay down, and fell asleep just like that. She opened the refrigerator, but there was no chilled tea. Only the interior light, shining quietly.',
+  'tale12-p3': '"...I forgot."',
+  'tale12-p4': 'Said aloud, the forgetting grew a little lighter.',
+  'tale12-p5': 'She poured tap water into a glass. As she turned the faucet, the old pipes gave a low groan, and clear water rose to fill it. Not cold. Lukewarm, just water. A plain, unremarkable glassful of a summer morning.',
+  'tale12-p6': 'She put it to her lips.',
+  'tale12-p7': 'Mokurou drew the glass back a little, and looked into the surface of the water.',
+  'tale12-p8': 'There was a scent. Faint, but certain. Not the smell of chlorine. Of earth, of moss, of damp tree roots—the scent of the forest, from somewhere deep within it. Long ago, on a journey, she had once drunk water that welled up from between the rocks. It was the same scent as that.',
+  'tale12-p9': 'It was only the kitchen tap of the shrine.',
+  'tale12-p10': 'And yet Mokurou knows. That beneath this shrine, the roots of the sacred tree reach down to the depths of the earth. The roots of that great tree, cradling the amber.',
+  'tale12-p11': 'Perhaps, somewhere, the water pipe touches those roots. Perhaps the water that circles underground passes among the roots, and rises to the faucet each morning. Even as she thought it could not be so, there was a part of her that wished it were.',
+  'tale12-p12': 'Shiki peered into the water from the edge of the table.',
+  'tale12-p13': '"Lady Mokurou. ...This water."',
+  'tale12-p14': '"Mm."',
+  'tale12-p15': '"It smells of the forest, does it not."',
+  'tale12-p16': 'Shiki could tell as well, it seemed. Mokurou smiled a little.',
+  'tale12-p17': 'Daifuku plopped onto her lap.',
+  'tale12-p18': '"Pou. I like this water. It\'s not warm, but somehow... it has a gentle taste."',
+  'tale12-p19': 'Mokurou took another sip of the lukewarm water.',
+  'tale12-p20': 'It was, indeed, a gentle taste. With cold tea, she might never have noticed. Because it was lukewarm, the scent rose. Because she had forgotten, she drank this water. The self of last night, who forgot to set the tea, had brought this morning\'s glassful here.',
+  'tale12-p21': '"...Perhaps it was good that I forgot."',
+  'tale12-p22': 'Outside the window, it was already the light of summer.',
+  'tale12-p23': 'At the bottom of the glass, only the scent of water remained, quietly.',
+  'tale12-end': 'End',
+  'tale12-footer': '© Mokurou — Unbowed by the world, the brush moves on.'
 };
 
 // ===== Lang switch =====
