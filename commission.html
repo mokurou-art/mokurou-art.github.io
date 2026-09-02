@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お品書き・ご依頼 — お絵描き屋 黙朗</title>
+  <meta name="description" content="お絵描き屋 黙朗のイラスト料金表・実績・ご依頼窓口。立ち絵、スチル、MV・サムネイル等。">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ===== commission page only ===== */
+    body.cm { background: var(--bg); }
+    .cm-wrap { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+    .cm-head { padding: 80px 0 48px; text-align: center; border-bottom: 1px solid rgba(200,148,58,.18); }
+    .cm-head .en { font-family: var(--font-en); font-size: .95rem; letter-spacing: .22em; color: var(--amber-dim); }
+    .cm-head h1 { font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 400; color: var(--white); margin: 10px 0 14px; letter-spacing: .1em; }
+    .cm-status { display: inline-block; font-size: .88rem; color: var(--amber); border: 1px solid rgba(200,148,58,.35); border-radius: 2px; padding: 6px 16px; }
+
+    .cm-sec { padding: 56px 0 8px; }
+    .cm-sec > .label { font-family: var(--font-en); font-size: .8rem; letter-spacing: .3em; color: var(--amber-dim); text-align: center; margin-bottom: 6px; }
+    .cm-sec > h2 { font-size: 1.15rem; font-weight: 400; color: var(--white); text-align: center; letter-spacing: .14em; margin-bottom: 32px; }
+
+    /* works */
+    .works { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+    .work figure { margin: 0; }
+    .work .frame { background: #12121a; border: 1px solid rgba(200,148,58,.14); overflow: hidden; display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 10; }
+    .work .frame.tall { aspect-ratio: 3 / 4; }
+    .work .frame.square { aspect-ratio: 1 / 1; }
+    .work .frame.sheet { background: #f4f2ee; aspect-ratio: 16 / 13; }
+    .work .frame.sheet .img-protect img { object-fit: contain; }
+    .work .frame.square .img-protect img { object-fit: contain; padding: 8px; }
+    .work img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .work .frame.tall img { object-fit: contain; padding: 10px 0; }
+    .work .frame .img-protect { width: 100%; height: 100%; }
+    .work .frame .img-protect img { width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-drag: none; -webkit-touch-callout: none; pointer-events: none; }
+    .work .frame.tall .img-protect img { object-fit: contain; padding: 10px 0; }
+    .work figcaption { font-size: .82rem; color: var(--text-muted); margin-top: 10px; line-height: 1.7; }
+    .work figcaption b { color: var(--text); font-weight: 400; }
+
+    /* price */
+    .price-block { border-top: 1px solid rgba(200,148,58,.14); padding: 22px 0; }
+    .price-block:last-of-type { border-bottom: 1px solid rgba(200,148,58,.14); }
+    .price-block h3 { font-size: .98rem; font-weight: 500; color: var(--amber); letter-spacing: .08em; margin-bottom: 4px; }
+    .price-block .note { font-size: .78rem; color: var(--text-muted); margin-bottom: 12px; }
+    .price-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 5px 0; font-size: .92rem; }
+    .price-row .name { color: var(--text); }
+    .price-row .dots { flex: 1; border-bottom: 1px dotted rgba(122,116,104,.4); transform: translateY(-4px); }
+    .price-row .yen { color: var(--white); white-space: nowrap; }
+    .price-list { list-style: none; }
+    .price-list li { font-size: .88rem; color: var(--text); padding: 4px 0 4px 1em; text-indent: -1em; }
+    .price-list li::before { content: "・"; color: var(--amber-dim); }
+
+    /* flow */
+    .flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+    .flow div { border: 1px solid rgba(200,148,58,.14); padding: 16px 14px; font-size: .84rem; color: var(--text); }
+    .flow span { display: block; font-family: var(--font-en); font-size: .75rem; letter-spacing: .2em; color: var(--amber-dim); margin-bottom: 6px; }
+
+    /* contact */
+    .contact { text-align: center; }
+    .btn { display: inline-block; font-size: .95rem; letter-spacing: .1em; color: var(--bg); background: var(--amber); padding: 14px 40px; text-decoration: none; border: 1px solid var(--amber); transition: opacity .3s; }
+    .btn:hover { opacity: .82; }
+    .btn-sub { display: inline-block; font-size: .88rem; letter-spacing: .06em; color: var(--amber); text-decoration: none; border: 1px solid rgba(200,148,58,.35); padding: 13px 30px; transition: background .3s; }
+    .btn-sub:hover { background: rgba(200,148,58,.08); }
+    .btn-line { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+    .contact p { font-size: .84rem; color: var(--text-muted); line-height: 1.9; }
+
+    /* shop */
+    .shop { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .shop a { font-family: var(--font-en); font-size: .85rem; letter-spacing: .15em; color: var(--text-muted); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 3px; transition: color .3s, border-color .3s; }
+    .shop a:hover { color: var(--amber); border-color: var(--amber-dim); }
+
+    .cm-foot { text-align: center; padding: 56px 0 0; border-top: 1px solid rgba(200,148,58,.14); margin-top: 56px; }
+    .cm-foot a { color: var(--text-muted); font-size: .85rem; text-decoration: none; letter-spacing: .1em; }
+    .cm-foot a:hover { color: var(--amber); }
+    .cm-foot p { font-size: .78rem; color: var(--text-muted); margin-top: 18px; }
+  </style>
+</head>
+<body class="cm">
+
+  <div class="cm-wrap">
+
+    <!-- ========== HEAD ========== -->
+    <header class="cm-head">
+      <p class="en">COMMISSION</p>
+      <h1>お絵描き屋 黙朗｜お品書き</h1>
+      <p class="cm-status">現在、少数のみお受けしています</p>
+      <p style="font-size:.85rem;color:var(--text-muted);margin-top:16px;line-height:1.9;">TRPG・インディーゲーム・同人・配信活動など、<br>創作を世に出す方のためのビジュアル制作をしています。</p>
+    </header>
+
+    <!-- ========== WORKS ========== -->
+    <section class="cm-sec">
+      <p class="label">WORKS</p>
+      <h2>— 最近のお仕事 —</h2>
+      <p style="text-align:center;font-size:.8rem;color:var(--text-muted);margin:-20px 0 28px;">※ ご依頼いただいた作品と、自作キャラクターの作例を含みます。</p>
+      <div class="works">
+
+        <div class="work">
+          <figure>
+            <div class="frame"><div class="img-protect"><img src="images/works/work_mv_01.jpg" alt="MV用イラスト" loading="lazy" draggable="false"><div class="img-overlay"></div></div></div>
+            <figcaption><b>MV用イラスト</b><br>歌ってみた動画用・キャラクター2名＋背景／レイヤー分け納品</figcaption>
+          </figure>
+        </div>
+
+        <div class="work">
+          <figure>
+            <div class="frame"><div class="img-protect"><img src="images/works/work_mv_02.jpg" alt="MV用一枚絵" loading="lazy" draggable="false"><div class="img-overlay"></div></div></div>
+            <figcaption><b>MV用 一枚絵</b><br>キャラクター1名＋背景／腕・表情差分あり／動画利用</figcaption>
+          </figure>
+        </div>
+
+        <div class="work">
+          <figure>
+            <div class="frame"><div class="img-protect"><img src="images/works/work_thumb_01.jpg" alt="配信サムネイル" loading="lazy" draggable="false"><div class="img-overlay"></div></div></div>
+            <figcaption><b>配信サムネイル</b><br>キャラクター＋背景／差分あり・パーツ分け納品</figcaption>
+          </figure>
+        </div>
+
+        <div class="work">
+          <figure>
+            <div class="frame tall"><div class="img-protect"><img src="images/works/work_sprite_own.png" alt="立ち絵" loading="lazy" draggable="false"><div class="img-overlay"></div></div></div>
+            <figcaption><b>立ち絵（全身）</b><br>TRPG用・衣装／武器の差分5種＋異形形態</figcaption>
+          </figure>
+        </div>
+
+        <div class="work">
+          <figure>
+            <div class="frame tall"><div class="img-protect"><img src="images/works/work_sit_chair.png" alt="座り立ち絵" loading="lazy" draggable="false"><div class="img-overlay"></div></div></div>
+            <figcaption><b>立ち絵（座り・椅子）</b><br>小物を含む座りポーズ／卓・配信での使用を想定</figcaption>
+          </figure>
+        </div>
+
+        <div class="work">
+          <figure>
+            <div class="frame tall"><div class="img-protect"><img src="images/works/work_sit_floor.png" alt="座り立ち絵" loading="lazy" draggable="false"><div class="img-overlay"></div></div></div>
+            <figcaption><b>立ち絵（座り・床）</b><br>小物を含む座りポーズ</figcaption>
+          </figure>
+        </div>
+
+        <div class="work">
+          <figure>
+            <div class="frame"><div class="img-protect"><img src="images/works/work_still_01.jpg" alt="スチル・1枚絵" loading="lazy" draggable="false"><div class="img-overlay"></div></div></div>
+            <figcaption><b>スチル・1枚絵</b><br>キャラクター1名＋場面背景／構図・光の演出込み</figcaption>
+          </figure>
+        </div>
+
+        <div class="work">
+          <figure>
+            <div class="frame square"><div class="img-protect"><img src="images/works/work_chibi_01.png" alt="デフォルメ" loading="lazy" draggable="false"><div class="img-overlay"></div></div></div>
+            <figcaption><b>デフォルメ・SDイラスト</b><br>全身SD／アイコン・スタンプ等にも</figcaption>
+          </figure>
+        </div>
+
+        <div class="work">
+          <figure>
+            <div class="frame sheet"><div class="img-protect"><img src="images/works/work_chardesign_01.jpg" alt="キャラクターデザイン設定画" loading="lazy" draggable="false"><div class="img-overlay"></div></div></div>
+            <figcaption><b>キャラクターデザイン（設定画）</b><br>全身＋各部の設定・小物の由来／表情差分・アイコン案まで</figcaption>
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== PRICE ========== -->
+    <section class="cm-sec">
+      <p class="label">PRICE</p>
+      <h2>— 料金表 —</h2>
+
+      <div class="price-block">
+        <h3>立ち絵（キャラクターイラスト）</h3>
+        <p class="note">透過PNG納品・場面背景なし</p>
+        <div class="price-row"><span class="name">バストアップ</span><span class="dots"></span><span class="yen">15,000円〜</span></div>
+        <div class="price-row"><span class="name">全身（基準）</span><span class="dots"></span><span class="yen">30,000円</span></div>
+        <div class="price-row"><span class="name">全身＋差分1点</span><span class="dots"></span><span class="yen">36,000円</span></div>
+        <div class="price-row"><span class="name">差分追加（表情・ポーズ）</span><span class="dots"></span><span class="yen">+6,000円／点</span></div>
+      </div>
+
+      <div class="price-block">
+        <h3>スチル・1枚絵（場面画）</h3>
+        <div class="price-row"><span class="name">1枚絵</span><span class="dots"></span><span class="yen">応相談</span></div>
+        <p class="note" style="margin:8px 0 0;">キャラ数・背景・差分に応じてお見積もりいたします。</p>
+      </div>
+
+      <div class="price-block">
+        <h3>その他</h3>
+        <p class="note">下記のほか、記載のないご依頼もお気軽にご相談ください。</p>
+        <ul class="price-list">
+          <li>デフォルメ・SDイラスト（アイコン、スタンプ等）</li>
+          <li>歌ってみた／MV用イラスト</li>
+          <li>サムネイル・配信素材</li>
+          <li>ロゴ・グッズ用イラスト</li>
+          <li>キービジュアル</li>
+        </ul>
+      </div>
+
+      <div class="price-block">
+        <h3>含まれるもの</h3>
+        <ul class="price-list">
+          <li>商用利用権（グッズ・配信・販促等）</li>
+          <li>修正2回まで</li>
+          <li>納品形式：PSD＋PNG</li>
+        </ul>
+      </div>
+
+      <div class="price-block">
+        <h3>別料金</h3>
+        <div class="price-row"><span class="name">背景（簡易）</span><span class="dots"></span><span class="yen">+8,000円</span></div>
+        <div class="price-row"><span class="name">背景（描き込み）</span><span class="dots"></span><span class="yen">応相談</span></div>
+        <div class="price-row"><span class="name">特急対応</span><span class="dots"></span><span class="yen">+50%</span></div>
+        <div class="price-row"><span class="name">二次利用範囲の拡大・独占</span><span class="dots"></span><span class="yen">応相談</span></div>
+      </div>
+
+      <div class="price-block">
+        <h3>ご注意</h3>
+        <ul class="price-list">
+          <li>お支払いはラフ確定時にお願いしております</li>
+          <li>ラフ確定後のキャンセルは50%を申し受けます</li>
+          <li>修正3回目以降：+3,000円／点</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== PACKAGE ========== -->
+    <section class="cm-sec">
+      <p class="label">PACKAGE</p>
+      <h2>— セットでのご依頼 —</h2>
+      <p style="text-align:center;font-size:.85rem;color:var(--text-muted);margin:-20px 0 30px;line-height:1.9;">
+        一枚ずつよりも、まとめてご依頼いただくほうが<br>世界観がそろい、公開までが早くなります。構成はご相談のうえ組みます。
+      </p>
+      <div class="flow">
+        <div><span>A</span>作品を出す<br><span style="display:inline;font-family:var(--font-jp);letter-spacing:0;color:var(--text-muted);font-size:.8rem;">ロゴ ＋ メインビジュアル ＋ 告知画像</span></div>
+        <div><span>B</span>TRPGシナリオ一式<br><span style="display:inline;font-family:var(--font-jp);letter-spacing:0;color:var(--text-muted);font-size:.8rem;">ロゴ ＋ 表紙 ＋ NPC立ち絵 ＋ 販売ページ画像</span></div>
+        <div><span>C</span>配信をはじめる<br><span style="display:inline;font-family:var(--font-jp);letter-spacing:0;color:var(--text-muted);font-size:.8rem;">立ち絵 ＋ 表情差分 ＋ サムネイル</span></div>
+      </div>
+      <p style="text-align:center;font-size:.82rem;color:var(--text-muted);margin-top:22px;">
+        構成に応じてお見積もりいたします。上記以外の組み合わせもご相談ください。
+      </p>
+    </section>
+
+    <!-- ========== FLOW ========== -->
+    <section class="cm-sec">
+      <p class="label">FLOW</p>
+      <h2>— ご依頼の流れ —</h2>
+      <div class="flow">
+        <div><span>01</span>ご相談・お問い合わせ</div>
+        <div><span>02</span>内容の確認・お見積り</div>
+        <div><span>03</span>ラフのご確認・お支払い</div>
+        <div><span>04</span>清書・修正</div>
+        <div><span>05</span>納品</div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section class="cm-sec contact">
+      <p class="label">CONTACT</p>
+      <h2>— ご依頼・お問い合わせ —</h2>
+      <div class="btn-line">
+        <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdARs7X3wBFKIfdjxeqdGmHgKo6q7p0YUef_YfxHBltvG1wyQ/viewform" target="_blank" rel="noopener">依頼フォームへ</a>
+        <a class="btn-sub" id="mail-btn" href="#" data-u="mkruhisn" data-d="gmail.com">メールでご相談</a>
+      </div>
+      <p>
+        料金表をご確認のうえ、フォームよりご連絡ください。<br>
+        セットでのご依頼・記載のない内容も、まずはご相談ください。<br>
+        内容によってはお受けできない場合がございます。あらかじめご了承ください。
+      </p>
+    </section>
+
+    <!-- ========== SHOP ========== -->
+    <section class="cm-sec contact">
+      <p class="label">MATERIALS</p>
+      <h2>— 立ち絵素材の販売 —</h2>
+      <p style="margin-bottom:20px;">ご依頼のほかに、そのままお使いいただける立ち絵素材も頒布しています。</p>
+      <div class="shop">
+        <a href="https://mkru-oekky.booth.pm/" target="_blank" rel="noopener">BOOTH</a>
+        <a href="https://mokurou-art.itch.io/" target="_blank" rel="noopener">itch.io</a>
+        <a href="https://x.com/mkruhisn" target="_blank" rel="noopener">X</a>
+        <!-- DLsite＝サークルページのURLが分かったら差し替え： <a href="ここ" target="_blank" rel="noopener">DLsite</a> -->
+      </div>
+    </section>
+
+    <!-- ========== FOOT ========== -->
+    <footer class="cm-foot">
+      <a href="main.html">← 黙朗のサイトへ戻る</a>
+      <p>© 黙朗 — 世に阿ねず、筆を運ぶ。</p>
+    </footer>
+
+  </div>
+
+  <script>
+    document.addEventListener("contextmenu", function (e) {
+      if (e.target.closest(".img-protect")) { e.preventDefault(); }
+    });
+    (function () {
+      var b = document.getElementById("mail-btn");
+      if (!b) return;
+      var a = b.getAttribute("data-u") + String.fromCharCode(64) + b.getAttribute("data-d");
+      b.setAttribute("href", "mailto:" + a + "?subject=" + encodeURIComponent("イラストのご依頼について"));
+      b.setAttribute("title", a);
+    })();
+    document.addEventListener("dragstart", function (e) {
+      if (e.target.closest(".img-protect")) { e.preventDefault(); }
+    });
+  </script>
+
+</body>
+</html>
