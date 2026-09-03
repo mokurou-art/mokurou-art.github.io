@@ -50,6 +50,7 @@ var i18nEN = {
 
   // Links
   'links-label': '— Find —',
+  'links-commission': 'For those considering a commission →',
 
   // Footer
   'footer-copy': '© Mokurou — Unbowed by the world, the brush moves on.',

@@ -582,3 +582,23 @@ footer .credits {
   letter-spacing: 0.2em;
   color: rgba(122, 116, 104, 0.5);
 }
+
+/* ===== COMMISSION LINE (links section) ===== */
+.commission-line {
+  text-align: center;
+  margin-top: -0.8rem;
+}
+
+.commission-line a {
+  color: var(--text-muted);
+  opacity: 0.75;
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  transition: color 0.3s, opacity 0.3s;
+}
+
+.commission-line a:hover {
+  color: var(--amber);
+  opacity: 1;
+}
