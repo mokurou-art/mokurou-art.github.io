@@ -195,6 +195,21 @@ table.avg td:first-child,table.avg th:first-child{text-align:left}
 .chips button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .chips button .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:5px}
 .hint{font-size:12px;color:var(--sub);margin-top:4px}
+/* 終日 */
+#allday{flex:none;display:flex;gap:6px;flex-wrap:wrap;padding:6px 10px;background:var(--panel);border-bottom:1px solid var(--line)}
+#allday[hidden]{display:none}
+#allday .adl{font-size:12px;color:var(--sub);align-self:center}
+.adp{border:0;border-radius:8px;min-height:34px;padding:4px 10px;font-size:13.5px;cursor:pointer;text-align:left;
+  background:color-mix(in srgb, var(--c) 22%, var(--panel));border-left:4px solid var(--c);max-width:100%}
+.day .dl em{font-style:normal;font-weight:400;font-size:12px;color:var(--sub);margin-left:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mc .ch.ad{border-left:0;border:1px solid var(--c);background:none}
+/* 選ぶ画面（削除） */
+#choice{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end}
+#choice[hidden]{display:none}
+#choice .bg{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+#choice .pn{position:relative;width:100%;background:var(--panel);border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}
+#choice p{margin:0 0 4px;font-size:15px;line-height:1.5}
+#choice .btn{height:50px;width:100%}
 </style>
 </head>
 <body>
@@ -209,6 +224,7 @@ table.avg td:first-child,table.avg th:first-child{text-align:left}
     <button class="hb" id="mNext" aria-label="次の月">›</button>
   </span>
 </header>
+<div id="allday" hidden></div>
 
 <main>
   <section class="view on" id="vDay">
@@ -241,11 +257,14 @@ table.avg td:first-child,table.avg th:first-child{text-align:left}
     <div class="top"><b id="fTitle">予定を追加</b><button type="button" class="btn" id="fClose">閉じる</button></div>
     <div class="f"><label>作業内容</label><input id="fName" placeholder="例：本業A ラフ" enterkeyhint="done"></div>
     <div class="f"><label>日付</label><input type="date" id="fDate"></div>
-    <div class="f two">
-      <div><label>開始</label><input type="time" id="fStart" step="300"></div>
-      <div><label>終了</label><input type="time" id="fEnd" step="300"></div>
+    <div class="f"><div class="chips" id="fAll"></div></div>
+    <div id="fTimes">
+      <div class="f two">
+        <div><label>開始</label><input type="time" id="fStart" step="300"></div>
+        <div><label>終了</label><input type="time" id="fEnd" step="300"></div>
+      </div>
+      <div class="hint" id="fDurHint"></div>
     </div>
-    <div class="hint" id="fDurHint"></div>
     <div class="f"><label>種類（選ぶか、打ちこむ）</label><div class="chips" id="fTypeChips"></div>
       <input id="fType" list="dlType" placeholder="種類" style="margin-top:6px"></div>
     <div class="f"><label>プロジェクト（選ぶか、打ちこむ・本業は「本業A」「本業B」など）</label><div class="chips" id="fProjChips"></div>
@@ -270,6 +289,7 @@ table.avg td:first-child,table.avg th:first-child{text-align:left}
 <datalist id="dlType"></datalist>
 <datalist id="dlProj"></datalist>
 <input type="file" id="importFile" accept="application/json,.json" hidden>
+<div id="choice" hidden><div class="bg"></div><div class="pn"></div></div>
 
 <script>
 "use strict";
@@ -349,7 +369,8 @@ function show(v){
   $("hdDay").hidden = v!=="vDay";
   $("hdMonth").hidden = !(v==="vMonth"||v==="vStats");
   $("fab").hidden = !(v==="vDay"||v==="vMonth");
-  if(v==="vDay"){ updateHeadDate(); }
+  allDayShown = null;
+  if(v==="vDay"){ updateHeadDate(); } else { $("allday").hidden = true; }
   if(v==="vMonth") renderMonth();
   if(v==="vStats") renderStats();
   if(v==="vSet") { $("ttl").textContent="設定"; renderSettings(); }
@@ -372,10 +393,12 @@ function renderDays(){
   tl.style.setProperty("--hour", HOUR+"px");
   document.documentElement.style.setProperty("--gut", GUT+"px");
   const td = today(); let h = "";
+  const ad = {};
+  for(const t of S.tasks) if(t.allDay) (ad[t.date] ||= []).push(t.title);
   for(let i=0;i<RANGE_DAYS;i++){
     const s = addDays(rangeStart,i), dow = pd(s).getDay();
     h += `<div class="day${dow===0||dow===6?" we":""}${s===td?" today":""}" style="top:${i*DAYPX}px;height:${DAYPX}px">`+
-         `<div class="dl"><span>${md(s)}</span></div>`;
+         `<div class="dl"><span>${md(s)}</span>${ad[s]?`<em>終日：${esc(ad[s].join("・"))}</em>`:""}</div>`;
     for(let k=1;k<24;k++) h += `<div class="hl" style="top:${k*HOUR}px">${k}:00</div>`;
     h += `</div>`;
   }
@@ -386,6 +409,7 @@ function layoutCards(){
   const max = RANGE_DAYS*DAYMIN;
   const items = [];
   for(const t of S.tasks){
+    if(t.allDay) continue;
     const g = gOf(t);
     if(g+t.dur <= 0 || g >= max) continue;
     items.push({t, g, e:g+Math.max(t.dur, 20)});
@@ -434,7 +458,22 @@ function updateHeadDate(){
   const g = topG() + 30;
   const s = dateOfG(g); const d = pd(s);
   $("ttl").textContent = `${d.getMonth()+1}月${d.getDate()}日(${WD[d.getDay()]})`;
+  renderAllDay(s);
 }
+/* 終日の予定＝画面の上の帯に、いま見ている日のぶんを出す */
+let allDayShown = null;
+function renderAllDay(s){
+  const bar = $("allday");
+  if(view!=="vDay"){ bar.hidden = true; allDayShown = null; return; }
+  const list = S.tasks.filter(t=>t.allDay && t.date===s);
+  const key = s + "|" + list.map(t=>t.id+t.title+t.type).join(",");
+  if(key === allDayShown) return;
+  allDayShown = key;
+  if(!list.length){ bar.hidden = true; bar.innerHTML = ""; return; }
+  bar.innerHTML = `<span class="adl">終日</span>` + list.map(t=>`<button class="adp" data-id="${t.id}" style="--c:${typeColor(t.type)}">${esc(t.title)}</button>`).join("");
+  bar.hidden = false;
+}
+$("allday").addEventListener("click", e=>{ const b=e.target.closest(".adp"); if(b) openForm(byId(b.dataset.id)); });
 function gotoDate(s, min){
   const off = diffDays(rangeStart, s);
   if(off < 7 || off > RANGE_DAYS-14){ rangeStart = addDays(s, -RANGE_BEFORE); renderTimeline(); }
@@ -633,6 +672,11 @@ function refreshProjChips(){
   const base = knownProjects().slice(0, 12);
   chips($("fProjChips"), base, $("fProj").value, v=>{ $("fProj").value=v; refreshProjChips(); });
 }
+let fAll = false;
+function refreshAll_(){
+  chips($("fAll"), ["時間を決める","終日（時間なし）"], fAll?"終日（時間なし）":"時間を決める", v=>{ fAll = v!=="時間を決める"; refreshAll_(); });
+  $("fTimes").hidden = fAll;
+}
 function refreshPrio(){ chips($("fPrio"), ["高","中","低"], fPrio, v=>{ fPrio=v; refreshPrio(); }); }
 function refreshRep(){
   chips($("fRep"), ["なし","毎日","毎週（曜日）"], {none:"なし",daily:"毎日",weekly:"毎週（曜日）"}[fRep], v=>{
@@ -677,12 +721,14 @@ function openForm(t, preset){
   $("fMemo").value = t ? (t.memo||"") : "";
   $("fActual").value = t && t.actual!=null ? t.actual : "";
   fPrio = t ? (t.prio||"中") : "中";
+  fAll = t ? !!t.allDay : !!(preset && preset.allDay);
+  if(t && t.allDay){ $("fStart").value = "10:00"; $("fEnd").value = "11:00"; editing._dur = 60; }
   fRep = "none"; fWd = new Set([pd(date).getDay()]); fSpan = 8;
   $("fRepeatBox").hidden = !isNew;
   $("fDel").hidden = isNew;
   $("dlType").innerHTML = knownTypes().map(v=>`<option value="${esc(v)}">`).join("");
   $("dlProj").innerHTML = knownProjects().map(v=>`<option value="${esc(v)}">`).join("");
-  refreshTypeChips(); refreshProjChips(); refreshPrio(); refreshRep(); durHint();
+  refreshTypeChips(); refreshProjChips(); refreshPrio(); refreshRep(); refreshAll_(); durHint();
   $("sheet").hidden = false;
   if(isNew) setTimeout(()=>$("fName").focus(), 50);
 }
@@ -692,13 +738,15 @@ $("sheet").querySelector(".bg").addEventListener("click", closeForm);
 
 $("form").addEventListener("submit", e=>{
   e.preventDefault();
-  const s = toMin($("fStart").value), en = toMin($("fEnd").value), date = $("fDate").value;
-  if(s==null || en==null || !date){ alert("日付と時刻を入れてください"); return; }
-  let dur = en - s; if(dur<=0) dur += DAYMIN;
+  let s = toMin($("fStart").value), en = toMin($("fEnd").value);
+  const date = $("fDate").value;
+  if(!date || (!fAll && (s==null || en==null))){ alert("日付と時刻を入れてください"); return; }
+  let dur;
+  if(fAll){ s = 0; dur = 0; } else { dur = en - s; if(dur<=0) dur += DAYMIN; }
   const act = $("fActual").value.trim();
   const base = {
     title: $("fName").value.trim() || "（無題）",
-    start: s, dur,
+    start: s, dur, allDay: fAll,
     type: $("fType").value.trim() || "その他",
     project: $("fProj").value.trim(),
     prio: fPrio, memo: $("fMemo").value,
@@ -720,17 +768,31 @@ $("form").addEventListener("submit", e=>{
   }
   save(); closeForm(); refreshAll();
 });
+/* 選ぶ画面：[{label, cls, fn}] を縦に並べる。最後は必ず「やめる」 */
+function choose(msg, opts){
+  const c = $("choice"), pn = c.querySelector(".pn");
+  pn.innerHTML = `<p>${esc(msg)}</p>` + opts.map((o,i)=>`<button type="button" class="btn ${o.cls||""}" data-i="${i}">${esc(o.label)}</button>`).join("") +
+    `<button type="button" class="btn" data-i="x">やめる</button>`;
+  c.hidden = false;
+  pn.onclick = e=>{ const b=e.target.closest("button"); if(!b) return; c.hidden = true; if(b.dataset.i!=="x") opts[+b.dataset.i].fn(); };
+}
+$("choice").querySelector(".bg").addEventListener("click", ()=>{ $("choice").hidden = true; });
+function removeTasks(list){
+  const ids = new Set(list.map(x=>x.id)), copies = list.map(x=>Object.assign({}, x));
+  S.tasks = S.tasks.filter(x=>!ids.has(x.id)); save(); closeForm(); refreshAll();
+  toast(list.length>1 ? `${list.length}件 削除しました` : "削除しました", ()=>{ S.tasks.push(...copies); save(); refreshAll(); });
+}
 $("fDel").addEventListener("click", ()=>{
   const t = byId(editing.id); if(!t) return;
-  if(t.series){
-    const later = S.tasks.filter(x=>x.series===t.series && x.date>=t.date);
-    const all = later.length>1 && confirm(`繰り返しの予定です。\n［OK］この日以降の${later.length}件をまとめて削除\n［キャンセル］この予定だけ（次に確認します）`);
-    if(all){ const ids=new Set(later.map(x=>x.id)); S.tasks = S.tasks.filter(x=>!ids.has(x.id)); save(); closeForm(); refreshAll(); return; }
+  const later = t.series ? S.tasks.filter(x=>x.series===t.series && x.date>=t.date) : [];
+  if(later.length > 1){
+    choose(`「${t.title}」は繰り返しの予定です。どれを消しますか？`, [
+      { label:`${md(t.date)} の1件だけ`, cls:"dan", fn:()=>removeTasks([t]) },
+      { label:`${md(t.date)} 以降ぜんぶ（${later.length}件）`, cls:"dan", fn:()=>removeTasks(later) }
+    ]);
+  }else{
+    choose(`「${t.title}」を削除しますか？`, [ { label:"削除する", cls:"dan", fn:()=>removeTasks([t]) } ]);
   }
-  if(!confirm(`「${t.title}」を削除しますか？`)) return;
-  const idx = S.tasks.indexOf(t), copy = Object.assign({}, t);
-  S.tasks.splice(idx,1); save(); closeForm(); refreshAll();
-  toast("削除しました", ()=>{ S.tasks.push(copy); save(); refreshAll(); });
 });
 
 $("fab").addEventListener("click", ()=>{
@@ -744,7 +806,8 @@ $("fab").addEventListener("click", ()=>{
 });
 
 function refreshAll(){
-  renderCards();
+  renderDays(); renderCards();
+  allDayShown = null; updateHeadDate();
   if(view==="vMonth") renderMonth();
   if(view==="vStats") renderStats();
 }
@@ -788,12 +851,12 @@ function renderMonth(){
   </div><div class="mg">`;
   WD.forEach((w,i)=>h+=`<div class="mw${i===0?" su":i===6?" sa":""}">${w}</div>`);
   for(let i=0;i<weeks*7;i++){
-    const s = addDays(gs,i), d = pd(s), list = (by[s]||[]).slice().sort((a,b)=>a.start-b.start);
+    const s = addDays(gs,i), d = pd(s), list = (by[s]||[]).slice().sort((a,b)=>(b.allDay?1:0)-(a.allDay?1:0) || a.start-b.start);
     const work = list.filter(t=>t.type!=="生活・休息").reduce((a,t)=>a+t.dur,0);
     const cls = ["mc"]; if(d.getMonth()!==m) cls.push("out"); if(s===td) cls.push("today");
     if(work>=12*60) cls.push("heavy"); else if(work>=8*60) cls.push("mid");
     h += `<button class="${cls.join(" ")}" data-date="${s}"><div class="mn"><span>${d.getDate()}</span>${work?`<i>${hrs(work)}h</i>`:""}</div>`;
-    list.slice(0,3).forEach(t=>h+=`<div class="ch" style="--c:${typeColor(t.type)}">${esc(t.title)}</div>`);
+    list.slice(0,3).forEach(t=>h+=`<div class="ch${t.allDay?" ad":""}" style="--c:${typeColor(t.type)}">${esc(t.title)}</div>`);
     if(list.length>3) h+=`<div class="more">+${list.length-3}</div>`;
     h += `</button>`;
   }
