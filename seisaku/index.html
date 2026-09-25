@@ -1018,8 +1018,21 @@ $("importFile").addEventListener("change", e=>{
     try{
       const d = JSON.parse(r.result);
       if(!d || !Array.isArray(d.tasks)) throw new Error("形式がちがいます");
-      if(!confirm(`${d.tasks.length}件の予定を読みこみます。今のデータ（${S.tasks.length}件）は置き換わります。よろしいですか？`)) return;
-      S = Object.assign({ v:1, seq:1, settings:{awake:16} }, d); save(); refreshAll(); renderSettings(); toast("読みこみました");
+      e.target.value = "";
+      // 足す：同じ日・同じ時刻・同じ作業内容のものは二重に入れない
+      const key = t => `${t.date}|${t.allDay?"終日":t.start}|${t.title}`;
+      const have = new Set(S.tasks.map(key));
+      const fresh = d.tasks.filter(t => t && t.date && !have.has(key(t)));
+      const add = () => {
+        const added = fresh.map(t => Object.assign({ prio:"中", memo:"", actual:null, type:"その他", project:"", start:0, dur:0 }, t, { id:newId() }));
+        S.tasks.push(...added); save(); refreshAll(); renderSettings();
+        toast(`${added.length}件 足しました`, ()=>{ const ids=new Set(added.map(x=>x.id)); S.tasks=S.tasks.filter(x=>!ids.has(x.id)); save(); refreshAll(); renderSettings(); });
+      };
+      const replace = () => { S = Object.assign({ v:1, seq:1, settings:{awake:16} }, d); save(); refreshAll(); renderSettings(); toast("読みこみました"); };
+      const opts = [ { label:`今の予定に足す（${fresh.length}件・同じものは飛ばす）`, cls:"pri", fn:add } ];
+      if(d.settings) opts.push({ label:`全部置き換える（今の${S.tasks.length}件は消える）`, cls:"dan", fn:replace });
+      choose(`${d.tasks.length}件の予定が入ったファイルです。`, opts);
+      return;
     }catch(err){ alert("読みこめませんでした：" + err.message); }
     e.target.value = "";
   };

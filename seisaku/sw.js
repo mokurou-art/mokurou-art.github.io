@@ -1,5 +1,5 @@
 // 制作マネージャー：オフラインでも開けるようにする（通信はページ本体の取得だけ）
-const CACHE = "seisaku-v3";
+const CACHE = "seisaku-v4";
 const FILES = ["./", "./index.html", "./manifest.json", "./icon.svg"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
