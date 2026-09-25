@@ -195,6 +195,12 @@ table.avg td:first-child,table.avg th:first-child{text-align:left}
 .chips button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .chips button .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:5px}
 .hint{font-size:12px;color:var(--sub);margin-top:4px}
+/* バックアップのお知らせ */
+#bkbar{flex:none;display:flex;align-items:center;gap:8px;padding:8px 10px;background:#fff3cd;color:#5c4400;font-size:13.5px}
+#bkbar[hidden]{display:none}
+#bkbar span{flex:1}
+#bkbar button{height:38px;border-radius:8px;padding:0 12px;cursor:pointer;font-size:14px;border:1px solid #5c4400;background:none;color:inherit}
+#bkbar .go{background:#5c4400;color:#fff3cd}
 /* 終日 */
 #allday{flex:none;display:flex;gap:6px;flex-wrap:wrap;padding:6px 10px;background:var(--panel);border-bottom:1px solid var(--line)}
 #allday[hidden]{display:none}
@@ -224,6 +230,7 @@ table.avg td:first-child,table.avg th:first-child{text-align:left}
     <button class="hb" id="mNext" aria-label="次の月">›</button>
   </span>
 </header>
+<div id="bkbar" hidden><span></span><button type="button" class="go">バックアップ</button><button type="button" class="later">あとで</button></div>
 <div id="allday" hidden></div>
 
 <main>
@@ -288,7 +295,7 @@ table.avg td:first-child,table.avg th:first-child{text-align:left}
 </div>
 <datalist id="dlType"></datalist>
 <datalist id="dlProj"></datalist>
-<input type="file" id="importFile" accept="application/json,.json" hidden>
+<input type="file" id="importFile" accept="application/json,.json,text/plain,.txt" hidden>
 <div id="choice" hidden><div class="bg"></div><div class="pn"></div></div>
 
 <script>
@@ -319,6 +326,7 @@ function load(){
     if(raw){ const d = JSON.parse(raw); if(d && Array.isArray(d.tasks)) S = Object.assign(S, d); }
   }catch(e){ console.warn(e); }
   S.settings = Object.assign({ awake:16 }, S.settings||{});
+  if(!S.firstUse){ S.firstUse = Date.now(); try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 }
 function save(){
   try{
@@ -937,8 +945,9 @@ function renderSettings(){
       <button class="btn" id="sAwakeSave">保存</button></div>
       <p class="note">「空き時間」の計算に使います。</p></div>
     <div class="box"><h4>バックアップ</h4>
-      <div class="row"><button class="btn pri" id="sExport">書き出す（JSON）</button><button class="btn" id="sImport">読みこむ</button></div>
-      <p class="note">データはこのスマホのブラウザの中だけにあります（外には送りません）。ブラウザのデータを消すと消えるので、ときどき書き出してGoogleドライブ等に置いてください。予定は全${S.tasks.length}件。</p></div>
+      <div class="row"><button class="btn pri" id="sExport">バックアップ</button><button class="btn" id="sImport">読みこむ</button></div>
+      <p class="note">最後のバックアップ：<b>${fmtBackup()}</b>（予定は全${S.tasks.length}件）<br>
+      「バックアップ」→ 共有の一覧から「ドライブ」を選んで保存。データはこのスマホの中だけにあるので、スマホが壊れたときはこのファイルを「読みこむ」で戻します。7日たつと上にお知らせが出ます。</p></div>
     <div class="box"><h4>自動の控え（日ごと・7日分）</h4>
       ${snaps.length?snaps.map(k=>`<div class="row" style="margin:6px 0"><span style="flex:1">${k.slice(13)}</span><button class="btn" data-snap="${k}">この日に戻す</button></div>`).join(""):`<p class="note">まだありません。</p>`}
     </div>
@@ -956,13 +965,51 @@ function renderSettings(){
     try{ const d=JSON.parse(localStorage.getItem(b.dataset.snap)); if(d&&Array.isArray(d.tasks)){ S=d; save(); refreshAll(); renderSettings(); toast("戻しました"); } }catch(e){ alert("読めませんでした"); }
   });
 }
-function exportData(){
-  const blob = new Blob([JSON.stringify(S,null,1)], {type:"application/json"});
+/* バックアップ＝Androidの共有（ドライブ等）へ。共有できない環境ではファイルに保存。
+   Chromeの共有は .json を受けつけないので、中身はJSONのまま .txt で渡す */
+async function exportData(){
+  const stamp = new Date(); S.lastBackup = stamp.getTime();
+  const text = JSON.stringify(S, null, 1);
+  const name = "seisaku_backup_" + today().replace(/-/g,"") + ".txt";
+  let file = null;
+  try{ file = new File([text], name, { type:"text/plain" }); }catch(e){}
+  if(file && navigator.canShare && navigator.canShare({ files:[file] })){
+    try{
+      await navigator.share({ files:[file], title:"制作マネージャーのバックアップ" });
+      save(); afterBackup(); return;
+    }catch(e){
+      if(e && e.name==="AbortError"){ delete S.lastBackup; load(); return; }   // やめた＝記録しない
+    }
+  }
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "seisaku_backup_" + today().replace(/-/g,"") + ".json";
+  a.href = URL.createObjectURL(new Blob([text], { type:"text/plain" }));
+  a.download = name;
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+  save(); afterBackup();
+}
+function afterBackup(){ toast("バックアップしました"); checkBackup(); if(view==="vSet") renderSettings(); }
+/* 最後のバックアップから7日たったら、上に帯を出す */
+const BACKUP_DAYS = 7;
+function checkBackup(){
+  const bar = $("bkbar");
+  const base = S.lastBackup || S.firstUse || Date.now();
+  const days = Math.floor((Date.now() - base) / 86400000);
+  let snoozed = false;
+  try{ snoozed = sessionStorage.getItem("mokuMgr.bkSnooze")==="1"; }catch(e){}
+  if(!S.tasks.length || days < BACKUP_DAYS || snoozed){ bar.hidden = true; return; }
+  bar.querySelector("span").textContent = S.lastBackup ? `最後のバックアップから${days}日たちました` : "まだバックアップしていません";
+  bar.hidden = false;
+}
+$("bkbar").querySelector(".go").addEventListener("click", exportData);
+$("bkbar").querySelector(".later").addEventListener("click", ()=>{
+  try{ sessionStorage.setItem("mokuMgr.bkSnooze","1"); }catch(e){}
+  $("bkbar").hidden = true;
+});
+function fmtBackup(){
+  if(!S.lastBackup) return "まだしていません";
+  const d = new Date(S.lastBackup);
+  return `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${pad(d.getMinutes())}`;
 }
 $("importFile").addEventListener("change", e=>{
   const f = e.target.files[0]; if(!f) return;
@@ -987,6 +1034,7 @@ show("vDay");
 try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
 if("serviceWorker" in navigator && location.protocol==="https:"){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
 if(!S.tasks.length) toast("＋ボタンか、空いている時間をタップで追加できます");
+checkBackup();
 </script>
 </body>
 </html>
