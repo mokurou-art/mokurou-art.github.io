@@ -300,6 +300,7 @@ table.avg td:first-child,table.avg th:first-child{text-align:left}
 
 <script>
 "use strict";
+const APP_VER = "9/26版";
 /* ---------- 定数 ---------- */
 const HOUR = 64;                 // 1時間の高さ(px)
 const PPM = HOUR / 60;           // 1分あたりのpx
@@ -956,7 +957,10 @@ function renderSettings(){
       ・予定をタップで編集。<b>長押しで掴んで、指を動かすと移動</b>。上下の端に持っていくとゆっくりスクロールして前の日・次の日へ。<br>
       ・移動した直後は下に「戻す」が出ます。<br>
       ・本業は、プロジェクトに「本業A」「本業B」のように入れると、集計で本業としてまとめて数えます。<br>
-      ・ホーム画面に置く：Chromeのメニュー → 「ホーム画面に追加」。</p></div>`;
+      ・ホーム画面に置く：Chromeのメニュー → 「ホーム画面に追加」。</p></div>
+    <div class="box"><h4>版</h4><p class="note">この画面の版：<b>${APP_VER}</b><br>新しい版が出ると、開いたときに自動で入れ替わります（ネットがつながっているとき）。</p>
+      <div class="row"><button class="btn" id="sReload">最新の版を読みこみ直す</button></div></div>`;
+  $("sReload").onclick = hardReload;
   $("sAwakeSave").onclick = ()=>{ const v=+$("sAwake").value; if(v>0&&v<=24){ S.settings.awake=v; save(); toast("保存しました"); } };
   $("sExport").onclick = exportData;
   $("sImport").onclick = ()=>$("importFile").click();
@@ -1039,13 +1043,31 @@ $("importFile").addEventListener("change", e=>{
   r.readAsText(f);
 });
 
+/* 設定の「最新の版を読みこみ直す」＝控えを捨てて取り直す。予定データ（localStorage）は消えない */
+async function hardReload(){
+  try{
+    if("caches" in window){ for(const k of await caches.keys()) await caches.delete(k); }
+    if("serviceWorker" in navigator){ for(const r of await navigator.serviceWorker.getRegistrations()) await r.unregister(); }
+  }catch(e){}
+  location.replace(location.pathname + "?v=" + Date.now());
+}
+
 /* ---------- 起動 ---------- */
 load();
 renderTimeline();
 gotoDate(today(), Math.max(0, nowMin()-60));
 show("vDay");
 try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
-if("serviceWorker" in navigator && location.protocol==="https:"){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
+/* 開いたら必ず新しい版を取りにいく。新しい版が入ったら一度だけ読みこみ直す */
+if("serviceWorker" in navigator && location.protocol==="https:"){
+  const hadCtrl = !!navigator.serviceWorker.controller;
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener("controllerchange", ()=>{ if(hadCtrl && !reloaded){ reloaded = true; location.reload(); } });
+  navigator.serviceWorker.register("sw.js", { updateViaCache:"none" }).then(reg=>{
+    reg.update().catch(()=>{});
+    document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible") reg.update().catch(()=>{}); });
+  }).catch(()=>{});
+}
 if(!S.tasks.length) toast("＋ボタンか、空いている時間をタップで追加できます");
 checkBackup();
 </script>
