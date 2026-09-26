@@ -300,7 +300,7 @@ table.avg td:first-child,table.avg th:first-child{text-align:left}
 
 <script>
 "use strict";
-const APP_VER = "9/26版";
+const APP_VER = "9/26版②";
 /* ---------- 定数 ---------- */
 const HOUR = 64;                 // 1時間の高さ(px)
 const PPM = HOUR / 60;           // 1分あたりのpx
@@ -1018,11 +1018,14 @@ function fmtBackup(){
 $("importFile").addEventListener("change", e=>{
   const f = e.target.files[0]; if(!f) return;
   const r = new FileReader();
-  r.onload = ()=>{
+  r.onload = ()=>{ e.target.value = ""; importText(r.result); };
+  r.readAsText(f);
+});
+/* 読みこみ（ファイルからでも、リンクからでも同じ） */
+function importText(text){
     try{
-      const d = JSON.parse(r.result);
+      const d = JSON.parse(text);
       if(!d || !Array.isArray(d.tasks)) throw new Error("形式がちがいます");
-      e.target.value = "";
       // 足す：同じ日・同じ時刻・同じ作業内容のものは二重に入れない
       const key = t => `${t.date}|${t.allDay?"終日":t.start}|${t.title}`;
       const have = new Set(S.tasks.map(key));
@@ -1036,12 +1039,18 @@ $("importFile").addEventListener("change", e=>{
       const opts = [ { label:`今の予定に足す（${fresh.length}件・同じものは飛ばす）`, cls:"pri", fn:add } ];
       if(d.settings) opts.push({ label:`全部置き換える（今の${S.tasks.length}件は消える）`, cls:"dan", fn:replace });
       choose(`${d.tasks.length}件の予定が入ったファイルです。`, opts);
-      return;
     }catch(err){ alert("読みこめませんでした：" + err.message); }
-    e.target.value = "";
-  };
-  r.readAsText(f);
-});
+}
+/* リンクから読みこむ：…/seisaku/#yomu=名前 で yotei/名前.json を取りにいく（同じサイトの中だけ） */
+async function importFromLink(){
+  const m = location.hash.match(/^#yomu=([A-Za-z0-9_-]+)$/); if(!m) return;
+  history.replaceState(null, "", location.pathname);
+  try{
+    const r = await fetch("yotei/" + m[1] + ".json", { cache:"no-store" });
+    if(!r.ok) throw new Error("ファイルが見つかりません（もう消したかも）");
+    importText(await r.text());
+  }catch(err){ alert("読みこめませんでした：" + err.message); }
+}
 
 /* 設定の「最新の版を読みこみ直す」＝控えを捨てて取り直す。予定データ（localStorage）は消えない */
 async function hardReload(){
@@ -1078,6 +1087,7 @@ async function checkVer(){
   }catch(e){}
 }
 document.addEventListener("visibilitychange", checkVer);
+importFromLink();
 if(!S.tasks.length) toast("＋ボタンか、空いている時間をタップで追加できます");
 checkBackup();
 </script>
