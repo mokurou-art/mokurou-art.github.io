@@ -1068,6 +1068,16 @@ if("serviceWorker" in navigator && location.protocol==="https:"){
     document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible") reg.update().catch(()=>{}); });
   }).catch(()=>{});
 }
+/* 画面に戻ってきたとき（アプリを閉じずに再開したとき）も、サイトの版が違えば読み直す */
+async function checkVer(){
+  if(location.protocol!=="https:" || document.visibilityState!=="visible") return;
+  try{
+    const t = await (await fetch("index.html", { cache:"no-store" })).text();
+    const m = t.match(/const APP_VER = "([^"]+)"/);
+    if(m && m[1]!==APP_VER && $("sheet").hidden && $("choice").hidden) location.reload();
+  }catch(e){}
+}
+document.addEventListener("visibilitychange", checkVer);
 if(!S.tasks.length) toast("＋ボタンか、空いている時間をタップで追加できます");
 checkBackup();
 </script>
