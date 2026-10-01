@@ -1,9 +1,0 @@
-{
- "v": 1,
- "tasks": [
-  {"date": "2026-10-01", "start": 1371, "dur": 20, "actual": 20, "title": "お風呂", "type": "生活・休息", "project": ""},
-  {"date": "2026-10-01", "start": 1391, "dur": 29, "actual": 29, "title": "ドライヤー", "type": "生活・休息", "project": ""},
-  {"date": "2026-10-01", "start": 1422, "dur": 18, "actual": 18, "title": "武人 立ち絵（ポーズ決め・ラフ）", "type": "イラスト制作", "project": "大正郵便"},
-  {"date": "2026-10-02", "start": 0, "dur": 103, "actual": 103, "title": "武人 立ち絵（ラフに服・ご子息と並べ）", "type": "イラスト制作", "project": "大正郵便"}
- ]
-}
