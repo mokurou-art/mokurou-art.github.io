@@ -1,0 +1,77 @@
+{
+ "v": 1,
+ "tasks": [
+  {
+   "date": "2026-10-03",
+   "start": 744,
+   "dur": 7,
+   "actual": 7,
+   "title": "12月配信卓 日程の問い合わせ送信",
+   "type": "TRPG",
+   "project": "大正郵便"
+  },
+  {
+   "date": "2026-10-03",
+   "start": 780,
+   "dur": 300,
+   "actual": 300,
+   "title": "VOID第1回（個別導入〜50階戦闘終了）",
+   "type": "TRPG",
+   "project": "VOID"
+  },
+  {
+   "date": "2026-10-03",
+   "start": 1080,
+   "dur": 39,
+   "actual": 39,
+   "title": "VOID第2回テキスト貼り（捜査会議の終わりまで）",
+   "type": "TRPG",
+   "project": "VOID"
+  },
+  {
+   "date": "2026-10-03",
+   "start": 1121,
+   "dur": 15,
+   "actual": 15,
+   "title": "夕食（ラーメン・みそ汁・納豆）",
+   "type": "生活・休息",
+   "project": ""
+  },
+  {
+   "date": "2026-10-03",
+   "start": 1205,
+   "dur": 18,
+   "actual": 18,
+   "title": "お風呂",
+   "type": "生活・休息",
+   "project": ""
+  },
+  {
+   "date": "2026-10-03",
+   "start": 1234,
+   "dur": 26,
+   "actual": 26,
+   "title": "ドライヤー・卓の準備",
+   "type": "生活・休息",
+   "project": ""
+  },
+  {
+   "date": "2026-10-03",
+   "start": 1260,
+   "dur": 180,
+   "actual": 180,
+   "title": "VOID第1回 夜（屋上戦闘〜捜査会議〜第一事件現場）",
+   "type": "TRPG",
+   "project": "VOID"
+  },
+  {
+   "date": "2026-10-04",
+   "start": 25,
+   "dur": 128,
+   "actual": 128,
+   "title": "武人 立ち絵（服装・がたい）",
+   "type": "イラスト制作",
+   "project": "大正郵便"
+  }
+ ]
+}
