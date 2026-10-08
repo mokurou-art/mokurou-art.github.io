@@ -379,16 +379,21 @@ h2 {
 }
 
 .tale-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+/* 物語一覧だけ横に広げる（パソコンで2〜3列・スマホは1列のまま） */
+#tale .section-inner {
+  max-width: 960px;
 }
 
 .tale-link {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  padding: 1.5rem;
+  padding: 1.1rem 1.25rem;
   border: 1px solid rgba(200, 148, 58, 0.15);
   border-radius: 3px;
   text-decoration: none;
